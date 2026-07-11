@@ -54,7 +54,7 @@
     <p class="meta">
       앱명: 실시간 음성 자막 번역 : ccplay<br>
       패키지명: com.ccplay.app<br>
-      시행일: 2026년 7월 9일<br>
+      시행일: 2026년 7월 10일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -99,10 +99,18 @@
 
     <h2>2. 수집하지 않는 정보</h2>
     <ul>
-      <li><strong>음성·영상 원본</strong>은 서버로 전송·저장하지 않습니다. 음성 인식(STT)과 번역은 <strong>이용자 기기에서</strong> 처리됩니다.</li>
-      <li><strong>자막 문장 내용</strong>을 서버에 저장하지 않습니다.</li>
+      <li><strong>음성·영상 원본</strong>은 서버로 전송·저장하지 않습니다. 음성 인식(STT)은 <strong>이용자 기기에서</strong> 처리됩니다.</li>
+      <li><strong>기본 번역</strong>은 기기 내(ML Kit)에서 처리됩니다.</li>
       <li>Google 로그인·이름·이메일·전화번호를 요구하지 않습니다.</li>
       <li>브라우징 방문 기록·쿠키·자동완성을 <strong>영구 저장하지 않는 것을 지향</strong>합니다. (앱 종료 시 삭제 설정 기본값)</li>
+    </ul>
+
+    <h2>2-1. Plus AI 모드(선택) 시 전송되는 정보</h2>
+    <ul>
+      <li>이용자가 Plus에서 <strong>AI 모드</strong>를 켠 경우에만, 확정된 <strong>자막 텍스트</strong>가 품질 향상을 위해 당사 서버를 거쳐 클라우드 AI 번역 API(Google Gemini)로 전달될 수 있습니다.</li>
+      <li><strong>오디오·영상은 전송하지 않습니다.</strong> 기본값은 꺼짐(옵트인)입니다.</li>
+      <li>해당 텍스트는 번역 응답 생성 목적에 사용되며, CCPlay 서버에 <strong>영구 저장하지 않는 것을 지향</strong>합니다.</li>
+      <li>AI 모드를 끄면 이 전송은 중단됩니다.</li>
     </ul>
 
     <h2>3. 정보의 보관 및 전송</h2>
@@ -117,6 +125,7 @@
       <li><strong>Google Play</strong>: 앱 배포·구독 결제·무결성 검증</li>
       <li><strong>Google ML Kit</strong>: 기기 내 번역(모델 다운로드 시 Google 서비스 이용)</li>
       <li><strong>Google Cloud</strong>: 이용 권한 API 호스팅</li>
+      <li><strong>Google Gemini API</strong>: Plus AI 모드(선택) 시 확정 자막 텍스트의 클라우드 AI 번역 생성</li>
     </ul>
     <p>위 서비스는 각 사업자의 정책에 따릅니다. CCPlay는 이용자 개인을 식별하는 정보를 제3자에게 판매하지 않습니다.</p>
 
@@ -147,7 +156,7 @@
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
-      <li><strong>음성·영상·자막 원문:</strong> 서버에 저장하지 않으므로 삭제 대상이 아닙니다.</li>
+      <li><strong>음성·영상·자막 원문(기본):</strong> 서버에 영구 저장하지 않으므로 삭제 대상이 아닙니다. Plus AI 모드 사용 시 전송된 텍스트도 영구 보관하지 않는 것을 지향합니다.</li>
       <li><strong>이름·이메일·전화번호:</strong> 수집하지 않습니다.</li>
       <li><strong>기기 내 설정·즐겨찾기:</strong> 앱 삭제(제거) 시 기기에서 삭제됩니다. 별도 서버 보관 없음.</li>
       <li><strong>Google Play 결제·구독 기록:</strong> Google이 보관합니다. 해지·환불은 Play 스토어 구독 관리에서 처리합니다.</li>
@@ -176,7 +185,7 @@
     <p class="meta">
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
-      Effective: July 9, 2026<br>
+      Effective: July 10, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -220,10 +229,18 @@
 
     <h2>2. Information we do not collect</h2>
     <ul>
-      <li><strong>Raw audio or video</strong> is not sent to or stored on our servers. Speech recognition (STT) and translation run <strong>on your device</strong>.</li>
-      <li><strong>Subtitle text content</strong> is not stored on our servers.</li>
+      <li><strong>Raw audio or video</strong> is not sent to or stored on our servers. Speech recognition (STT) runs <strong>on your device</strong>.</li>
+      <li><strong>Default translation</strong> runs on-device (ML Kit).</li>
       <li>We do not require Google sign-in, name, email, or phone number.</li>
       <li>We <strong>aim not to persist</strong> browsing history, cookies, or autofill data. (Clear-on-exit is enabled by default.)</li>
+    </ul>
+
+    <h2>2-1. Optional Plus AI mode</h2>
+    <ul>
+      <li>Only when you enable <strong>AI mode</strong> (Plus), finalized <strong>subtitle text</strong> may be sent through our server to a cloud AI translation API (Google Gemini).</li>
+      <li><strong>Audio and video are not sent.</strong> The setting defaults to off (opt-in).</li>
+      <li>We aim <strong>not to permanently store</strong> that text on CCPlay servers; it is used to generate a translation response.</li>
+      <li>Turning AI mode off stops this transmission.</li>
     </ul>
 
     <h2>3. Storage and transmission</h2>
@@ -238,6 +255,7 @@
       <li><strong>Google Play</strong>: distribution, subscriptions, integrity checks</li>
       <li><strong>Google ML Kit</strong>: on-device translation (may use Google services when downloading models)</li>
       <li><strong>Google Cloud</strong>: entitlement API hosting</li>
+      <li><strong>Google Gemini API</strong>: optional Plus AI mode — cloud AI translation of finalized subtitle text</li>
     </ul>
     <p>These services are governed by their respective policies. CCPlay does not sell personally identifiable information to third parties.</p>
 
@@ -268,7 +286,7 @@
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
-      <li><strong>Raw audio, video, or subtitle text:</strong> not stored on our servers; nothing to delete there.</li>
+      <li><strong>Raw audio, video, or subtitle text (default):</strong> not permanently stored on our servers. Text briefly processed for optional Plus AI mode is also not intended for permanent storage.</li>
       <li><strong>Name, email, phone number:</strong> not collected.</li>
       <li><strong>On-device settings and favorites:</strong> removed when you uninstall the App; not stored on our servers.</li>
       <li><strong>Google Play billing and subscription records:</strong> retained by Google; manage cancellation in Play Store.</li>
