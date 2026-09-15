@@ -55,7 +55,7 @@
       앱명: CCPlay : 실시간 영상 번역<br>
       패키지명: com.ccplay.app<br>
       시행일: 2026년 7월 10일<br>
-      최종 개정: 2026년 9월 11일<br>
+      최종 개정: 2026년 9월 14일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -101,6 +101,11 @@
           <td>앱 기능 제공(기기에만 저장)</td>
         </tr>
         <tr>
+          <td>앱 문의·답변 (선택)</td>
+          <td>이용자가 앱 문의함에 적은 내용, 카테고리, 앱/OS 버전·locale·설치 경로, 선택 시 진단 요약. 운영자 답변 본문. 익명 device_id로만 연결(이름·이메일 없음)</td>
+          <td>문의 확인·회신. 답변은 해당 기기에서만 조회</td>
+        </tr>
+        <tr>
           <td>블로그 문의 (선택)</td>
           <td>이용자가 블로그 문의 폼에 적은 내용, 그리고 남긴 경우에 한해 이름·이메일</td>
           <td>문의 확인·회신. 앱 설치·로그인과 무관</td>
@@ -142,7 +147,7 @@
       <li><strong>Soniox</strong>: 실시간 음성 인식·번역(CC 사용 시 오디오 스트림 처리)</li>
       <li><strong>Sentry</strong>: 크래시·ANR 등 앱 오류 진단(해외 서버로 진단 정보가 전송될 수 있음)</li>
       <li><strong>Google AdMob</strong>: 무료 사용자에게 보상형 광고·배너 표시(Plus는 요청하지 않음). AdMob 미디에이션을 통해 Meta Audience Network, Liftoff Monetize(Vungle), AppLovin 등 제3자 광고 네트워크의 광고가 같은 슬롯에 노출될 수 있음</li>
-      <li><strong>Notion</strong>: 블로그 문의 내용을 기록·처리(이용자가 문의를 보낸 경우에 한함)</li>
+      <li><strong>Notion</strong>: 앱·블로그 문의 내용을 기록·처리하고, 앱 문의 답변 작성에 사용(이용자가 문의를 보낸 경우에 한함). 앱 문의의 원본·답변 SSOT는 CCPlay 서버(Postgres)</li>
     </ul>
     <p>위 서비스는 각 사업자의 정책에 따릅니다. CCPlay는 이용자 개인을 식별하는 정보를 제3자에게 판매하지 않습니다.</p>
 
@@ -171,6 +176,7 @@
       <li>CC 사용 시간(일·월)·이용권·구독 잔여</li>
       <li>Plus 구독 상태·구매 토큰 연동 정보</li>
       <li>블로그 문의에서 제출한 이름·이메일·내용(해당 기록이 있는 경우)</li>
+      <li>앱 문의함 메시지·운영자 답변·관련 진단 요약(해당 device_id 기록이 있는 경우)</li>
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
@@ -205,7 +211,7 @@
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
       Effective: July 10, 2026<br>
-      Last updated: September 11, 2026<br>
+      Last updated: September 14, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -250,6 +256,11 @@
           <td>App functionality (stored on device only)</td>
         </tr>
         <tr>
+          <td>In-app inquiry and replies (optional)</td>
+          <td>Message and category you submit in the app inquiry inbox, app/OS version, locale, install source, optional diagnostics summary, and operator reply text. Linked only by anonymous device_id (no name or email)</td>
+          <td>To read and reply. Replies are visible only on that device</td>
+        </tr>
+        <tr>
           <td>Blog contact (optional)</td>
           <td>The message you submit on the blog contact form, plus name and email only if you provide them</td>
           <td>To read and reply to inquiries. Not tied to app install or sign-in</td>
@@ -291,7 +302,7 @@
       <li><strong>Soniox</strong>: real-time speech recognition and translation (audio stream while CC is on)</li>
       <li><strong>Sentry</strong>: crash/ANR diagnostics (diagnostic data may be processed on servers outside your country)</li>
       <li><strong>Google AdMob</strong>: rewarded ads and banners for free users (not requested while Plus is active). Via AdMob Mediation, creatives from third-party networks such as Meta Audience Network, Liftoff Monetize (Vungle), and AppLovin may fill the same slots</li>
-      <li><strong>Notion</strong>: storing and handling blog contact messages (only if you submit the form)</li>
+      <li><strong>Notion</strong>: storing and handling in-app and blog inquiries and drafting in-app replies (only if you submit). Postgres on CCPlay servers is the source of truth for in-app inquiry threads</li>
     </ul>
     <p>These services are governed by their respective policies. CCPlay does not sell personally identifiable information to third parties.</p>
 
@@ -320,6 +331,7 @@
       <li>CC usage duration (daily/monthly); pass and subscription remaining time</li>
       <li>Plus subscription status and purchase-token linkage</li>
       <li>Name, email, and message submitted via the blog contact form, if any</li>
+      <li>In-app inquiry messages, operator replies, and related diagnostics summaries for that device_id, if any</li>
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
