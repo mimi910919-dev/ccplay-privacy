@@ -148,7 +148,7 @@
       <li><strong>Soniox</strong>: 실시간 음성 인식·번역(CC 사용 시 오디오 스트림 처리)</li>
       <li><strong>Sentry</strong>: 크래시·ANR 등 앱 오류 진단(해외 서버로 진단 정보가 전송될 수 있음)</li>
       <li><strong>Google AdMob</strong>: 무료 사용자에게 보상형 광고·배너 표시(Plus는 요청하지 않음). AdMob 미디에이션을 통해 Meta Audience Network 광고가 같은 자리에 나갈 수 있음</li>
-      <li><strong>쿠팡</strong>: 한국에 있는 기기의 홈과 무료 시간 받기 화면에 쿠팡 파트너스 상품 배너를 표시할 수 있음(Plus는 요청하지 않음). 배너는 앱 안 웹뷰가 쿠팡 스크립트를 불러옵니다. 광고 ID를 쿠팡에 넘기지 않습니다. 그 웹뷰는 쿠팡 쿠키를 받을 수 있습니다. 배너를 눌러도 자막 이용 시간은 주지 않습니다</li>
+      <li><strong>쿠팡</strong>: 통신망 국가가 한국인 기기(통신망 국가가 비어 있으면 SIM 국가가 한국인 기기)의 홈과 무료 시간 받기 화면에 쿠팡 파트너스 상품 배너를 표시할 수 있음(Plus는 요청하지 않음). 배너는 앱 안 웹뷰가 쿠팡 스크립트를 불러옵니다. 광고 ID를 쿠팡에 넘기지 않습니다. 그 웹뷰는 브라우저의 서드파티 쿠키 설정과 상관없이 쿠팡 쿠키를 받을 수 있습니다. 배너를 눌러도 자막 이용 시간은 주지 않습니다</li>
       <li><strong>Notion</strong>: 앱·블로그 문의 내용을 기록·처리하고, 앱 문의 답변 작성에 사용(이용자가 문의를 보낸 경우에 한함). 앱 문의의 원본·답변 SSOT는 CCPlay 서버(Postgres)</li>
     </ul>
     <p>위 서비스는 각 사업자의 정책에 따릅니다. CCPlay는 이용자 개인을 식별하는 정보를 제3자에게 판매하지 않습니다.</p>
@@ -305,7 +305,7 @@
       <li><strong>Soniox</strong>: real-time speech recognition and translation (audio stream while CC is on)</li>
       <li><strong>Sentry</strong>: crash/ANR diagnostics (diagnostic data may be processed on servers outside your country)</li>
       <li><strong>Google AdMob</strong>: rewarded ads and banners for free users (not requested while Plus is active). Via AdMob Mediation, Meta Audience Network creatives may fill the same slots</li>
-      <li><strong>Coupang</strong>: on a device in Korea, the home screen and the free-time sheet may show a Coupang Partners product banner (not requested while Plus is active). An in-app WebView loads Coupang’s script. The app does not send the advertising ID to Coupang. That WebView may accept Coupang cookies. Tapping the banner does not add caption time</li>
+      <li><strong>Coupang</strong>: when the device’s mobile-network country is Korea, or the SIM country is Korea if the network country is empty, the home screen and the free-time sheet may show a Coupang Partners product banner (not requested while Plus is active). An in-app WebView loads Coupang’s script. The app does not send the advertising ID to Coupang. That WebView may accept Coupang cookies even if the browser blocks third-party cookies. Tapping the banner does not add caption time</li>
       <li><strong>Notion</strong>: storing and handling in-app and blog inquiries and drafting in-app replies (only if you submit). Postgres on CCPlay servers is the source of truth for in-app inquiry threads</li>
     </ul>
     <p>These services are governed by their respective policies. CCPlay does not sell personally identifiable information to third parties.</p>
