@@ -55,7 +55,7 @@
       앱명: CCPlay : 실시간 영상 번역<br>
       패키지명: com.ccplay.app<br>
       시행일: 2026년 7월 10일<br>
-      최종 개정: 2026년 10월 5일<br>
+      최종 개정: 2026년 10월 9일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -113,7 +113,7 @@
         <tr>
           <td>광고 식별 정보</td>
           <td>Google 광고 ID 등 AdMob SDK가 수집하는 기기·광고 신호 (Plus 구독 중에는 앱이 광고를 요청하지 않음)</td>
-          <td>무료 사용자 대상 광고 표시(보상형 영상·웹 홈 배너)</td>
+          <td>무료 사용자에게 광고를 표시(Plus 구독 중에는 요청하지 않음)</td>
         </tr>
       </tbody>
     </table>
@@ -121,7 +121,7 @@
     <h2>2. 수집하지 않는 정보</h2>
     <ul>
       <li>앱은 Google 로그인·이름·이메일·전화번호를 요구하지 않습니다. 블로그 문의 폼에서 이름·이메일은 선택입니다.</li>
-      <li>브라우징 방문 기록·쿠키·자동완성을 <strong>영구 저장하지 않는 것을 지향</strong>합니다. (앱 종료 시 삭제 설정 기본값)</li>
+      <li>브라우징 방문 기록·쿠키·자동완성을 <strong>영구 저장하지 않는 것을 지향</strong>합니다. (앱 종료 시 삭제 설정 기본값). 쿠팡 배너 웹뷰의 쿠키도 같은 저장소에 들어가며, 그 설정이 켜져 있으면 함께 지워집니다.</li>
       <li>음성·영상 <strong>원본 파일을 당사 서버에 영구 저장하지 않습니다.</strong></li>
     </ul>
 
@@ -147,7 +147,8 @@
       <li><strong>Google Cloud</strong>: 이용 권한 API 호스팅</li>
       <li><strong>Soniox</strong>: 실시간 음성 인식·번역(CC 사용 시 오디오 스트림 처리)</li>
       <li><strong>Sentry</strong>: 크래시·ANR 등 앱 오류 진단(해외 서버로 진단 정보가 전송될 수 있음)</li>
-      <li><strong>Google AdMob</strong>: 무료 사용자에게 보상형 광고·배너 표시(Plus는 요청하지 않음). AdMob 미디에이션을 통해 Meta Audience Network, Liftoff Monetize(Vungle), AppLovin 등 제3자 광고 네트워크의 광고가 같은 슬롯에 노출될 수 있음</li>
+      <li><strong>Google AdMob</strong>: 무료 사용자에게 보상형 광고·배너 표시(Plus는 요청하지 않음). AdMob 미디에이션을 통해 Meta Audience Network 광고가 같은 자리에 나갈 수 있음</li>
+      <li><strong>쿠팡</strong>: 한국에 있는 기기의 홈과 무료 시간 받기 화면에 쿠팡 파트너스 상품 배너를 표시할 수 있음(Plus는 요청하지 않음). 배너는 앱 안 웹뷰가 쿠팡 스크립트를 불러옵니다. 광고 ID를 쿠팡에 넘기지 않습니다. 그 웹뷰는 쿠팡 쿠키를 받을 수 있습니다. 배너를 눌러도 자막 이용 시간은 주지 않습니다</li>
       <li><strong>Notion</strong>: 앱·블로그 문의 내용을 기록·처리하고, 앱 문의 답변 작성에 사용(이용자가 문의를 보낸 경우에 한함). 앱 문의의 원본·답변 SSOT는 CCPlay 서버(Postgres)</li>
     </ul>
     <p>위 서비스는 각 사업자의 정책에 따릅니다. CCPlay는 이용자 개인을 식별하는 정보를 제3자에게 판매하지 않습니다.</p>
@@ -212,7 +213,7 @@
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
       Effective: July 10, 2026<br>
-      Last updated: October 5, 2026<br>
+      Last updated: October 9, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -269,7 +270,7 @@
         <tr>
           <td>Advertising identifiers</td>
           <td>Google advertising ID and other signals collected by the AdMob SDK (the app does not request ads while Plus is active)</td>
-          <td>Show ads to free users (rewarded video and the browser-home banner)</td>
+          <td>Show ads to free users (the app does not request ads while Plus is active)</td>
         </tr>
       </tbody>
     </table>
@@ -277,7 +278,7 @@
     <h2>2. Information we do not collect</h2>
     <ul>
       <li>The App does not require Google sign-in, name, email, or phone number. Name and email on the blog contact form are optional.</li>
-      <li>We <strong>aim not to persist</strong> browsing history, cookies, or autofill data. (Clear-on-exit is enabled by default.)</li>
+      <li>We <strong>aim not to persist</strong> browsing history, cookies, or autofill data. (Clear-on-exit is enabled by default.) Cookies from the Coupang banner WebView use the same store and are cleared with the others when that setting is on.</li>
       <li>We do <strong>not permanently store</strong> raw audio or video files on CCPlay servers.</li>
     </ul>
 
@@ -303,7 +304,8 @@
       <li><strong>Google Cloud</strong>: entitlement API hosting</li>
       <li><strong>Soniox</strong>: real-time speech recognition and translation (audio stream while CC is on)</li>
       <li><strong>Sentry</strong>: crash/ANR diagnostics (diagnostic data may be processed on servers outside your country)</li>
-      <li><strong>Google AdMob</strong>: rewarded ads and banners for free users (not requested while Plus is active). Via AdMob Mediation, creatives from third-party networks such as Meta Audience Network, Liftoff Monetize (Vungle), and AppLovin may fill the same slots</li>
+      <li><strong>Google AdMob</strong>: rewarded ads and banners for free users (not requested while Plus is active). Via AdMob Mediation, Meta Audience Network creatives may fill the same slots</li>
+      <li><strong>Coupang</strong>: on a device in Korea, the home screen and the free-time sheet may show a Coupang Partners product banner (not requested while Plus is active). An in-app WebView loads Coupang’s script. The app does not send the advertising ID to Coupang. That WebView may accept Coupang cookies. Tapping the banner does not add caption time</li>
       <li><strong>Notion</strong>: storing and handling in-app and blog inquiries and drafting in-app replies (only if you submit). Postgres on CCPlay servers is the source of truth for in-app inquiry threads</li>
     </ul>
     <p>These services are governed by their respective policies. CCPlay does not sell personally identifiable information to third parties.</p>
