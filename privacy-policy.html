@@ -160,8 +160,16 @@
     <ul>
       <li>앱을 실행하면 Google <strong>Firebase Cloud Messaging(FCM)</strong>이 이 기기에 푸시 토큰을 발급하고, 앱은 그 토큰을 익명 device_id와 함께 당사 서버에 보냅니다. 서버는 기기당 토큰 1개만 저장하고, 토큰이 바뀌면 새 토큰으로 바꿉니다.</li>
       <li>이 토큰은 앱 문의에 답변이 달렸을 때 알림을 보내는 데 씁니다. 공지·업데이트 알림은 앱이 구독한 FCM 주제(전체, 앱 언어, 앱 버전)로 보내며, 이 구독 정보는 당사 서버가 아니라 FCM이 관리합니다.</li>
-      <li>알림을 보낼 때나 점검할 때 FCM이 더 이상 쓸 수 없다고 알려 준 토큰은 서버에서 지웁니다. 그 밖에는 정해진 자동 삭제 기간이 없으며, <a href="#data-deletion">데이터 삭제 요청</a> 때 삭제합니다.</li>
+      <li>알림을 보낼 때와 6시간마다 도는 점검에서 FCM이 더 이상 쓸 수 없다고 알려 준 토큰은 서버에서 지웁니다. 아직 쓸 수 있는 토큰은 기간만으로 지우지 않으며, <a href="#data-deletion">데이터 삭제 요청</a> 때 삭제합니다.</li>
       <li>알림은 Android 설정에서 끌 수 있습니다. 「자막 만들기」 완료 알림은 서버 푸시가 아니라 앱이 기기에서 띄웁니다.</li>
+    </ul>
+
+    <h2>2-4. 온보딩 진행 기록</h2>
+    <ul>
+      <li>처음 열기, 권한 허용, 첫 자막처럼 온보딩이 어디까지 갔는지 단계 이름과 앱 버전, 언어·단계 번호 같은 짧은 값을 서버에 보냅니다.</li>
+      <li>Play 설치 출처에서는 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>와 <code>gclid</code>가 있었는지만 저장합니다. 설치 출처 원문과 <code>gclid</code> 값은 저장하지 않고 로그에도 남기지 않습니다.</li>
+      <li>기기 식별은 device_id 해시의 앞 16자만 씁니다. 이름, 이메일, 전화번호, 광고 ID는 보내지 않습니다. 같은 기기의 같은 단계는 한 번만 저장합니다.</li>
+      <li>이 기록은 온보딩 어느 단계에서 그만두는지 보는 데만 씁니다. <strong>90일이 지나면 삭제</strong>하고, <a href="#data-deletion">데이터 삭제 요청</a> 때도 그 기기 기록을 지웁니다.</li>
     </ul>
 
     <h2>3. 정보의 보관 및 전송</h2>
@@ -215,6 +223,7 @@
       <li>앱 문의함 메시지·운영자 답변·관련 진단 요약(해당 device_id 기록이 있는 경우)</li>
       <li>푸시 알림 토큰</li>
       <li>「자막 만들기」 작업 기록, 아직 남아 있는 자막 글, 진행 중인 작업의 오디오</li>
+      <li>온보딩 진행 기록, 설치 출처 요약</li>
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
@@ -354,8 +363,16 @@
     <ul>
       <li>When you open the app, Google <strong>Firebase Cloud Messaging (FCM)</strong> issues a push token to this device, and the app sends that token to our server with the anonymous device_id. The server keeps only one token per device and replaces it when the token changes.</li>
       <li>We use this token to notify you when an in-app inquiry gets a reply. Announcement and update notifications are sent to FCM topics the app subscribes to (all users, app language, app version); those subscriptions are managed by FCM, not stored on our server.</li>
-      <li>When FCM reports that a token can no longer be used (while sending a notification or during a check), we delete it from our server. Otherwise there is no fixed automatic deletion period; the token is deleted when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
+      <li>When FCM reports that a token can no longer be used, while sending a notification or during the check that runs every 6 hours, we delete it from our server. A token that still works is not deleted just because time has passed. It is deleted when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
       <li>You can turn notifications off in Android settings. The “Make subtitles” completion notification is shown by the app on your device, not sent as a server push.</li>
+    </ul>
+
+    <h2>2-4. Onboarding progress</h2>
+    <ul>
+      <li>The app sends step names such as first open, permission granted, and first subtitle, plus the app version and short values like a language code or step number.</li>
+      <li>From the Play install referrer we keep only <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, and whether a <code>gclid</code> was present. The raw referrer string and the <code>gclid</code> value are neither stored nor logged.</li>
+      <li>The device identifier is only the first 16 characters of the device_id hash. No name, email, phone number, or advertising ID is sent. Each step is stored once per device.</li>
+      <li>We use this only to see where people leave onboarding. Records are <strong>deleted after 90 days</strong>, and also when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
     </ul>
 
     <h2>3. Storage and transmission</h2>
@@ -409,6 +426,7 @@
       <li>In-app inquiry messages, operator replies, and related diagnostics summaries for that device_id, if any</li>
       <li>Push notification token</li>
       <li>“Make subtitles” job records, any subtitle text still kept, and the audio of a job still in progress</li>
+      <li>Onboarding progress records and the install-source summary</li>
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
