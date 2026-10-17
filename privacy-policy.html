@@ -55,7 +55,7 @@
       앱명: CCPlay : 실시간 영상 번역<br>
       패키지명: com.ccplay.app<br>
       시행일: 2026년 7월 10일<br>
-      최종 개정: 2026년 10월 12일<br>
+      최종 개정: 2026년 10월 17일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -115,6 +115,16 @@
           <td>Google 광고 ID 등 AdMob SDK가 수집하는 기기·광고 신호 (Plus 구독 중에는 앱이 광고를 요청하지 않음)</td>
           <td>무료 사용자에게 광고를 표시(Plus 구독 중에는 요청하지 않음)</td>
         </tr>
+        <tr>
+          <td>푸시 알림 토큰</td>
+          <td>Firebase Cloud Messaging(FCM)이 이 기기에 발급한 <strong>푸시 토큰</strong>. 익명 device_id와 함께 서버에 기기당 1개 저장</td>
+          <td>앱 문의 답변 알림, 공지·업데이트 알림 (자세한 내용은 2-3)</td>
+        </tr>
+        <tr>
+          <td>파일 자막 작업 기록 (「자막 만들기」 사용 시)</td>
+          <td>익명 device_id, 인식·번역 언어, 오디오 길이, 차감한 시간, 작업 상태·시각. 파일 이름은 보내지 않음</td>
+          <td>하루 이용 한도·시간 차감·오류 확인 (자세한 내용은 2-2)</td>
+        </tr>
       </tbody>
     </table>
 
@@ -123,6 +133,7 @@
       <li>앱은 Google 로그인·이름·이메일·전화번호를 요구하지 않습니다. 블로그 문의 폼에서 이름·이메일은 선택입니다.</li>
       <li>브라우징 방문 기록·쿠키·자동완성을 <strong>영구 저장하지 않는 것을 지향</strong>합니다. (앱 종료 시 삭제 설정 기본값). 쿠팡 배너 웹뷰의 쿠키도 같은 저장소에 들어가며, 그 설정이 켜져 있으면 함께 지워집니다.</li>
       <li>음성·영상 <strong>원본 파일을 당사 서버에 영구 저장하지 않습니다.</strong></li>
+      <li>「자막 만들기」에서 고른 파일의 오디오와 만들어진 자막 글은 서버에 <strong>잠시만</strong> 보관한 뒤 지웁니다. 기간은 아래 2-2를 봐 주세요.</li>
     </ul>
 
     <h2>2-1. 실시간 자막(CC) 처리 — 클라우드 STT(Soniox)</h2>
@@ -135,9 +146,29 @@
       <li>이용 시간·구독·이용권 잔여는 권한 API(Google Cloud)에 집계될 수 있습니다.</li>
     </ul>
 
+    <h2>2-2. 파일 자막(「자막 만들기」) 처리 — Soniox·Google Gemini</h2>
+    <ul>
+      <li>「자막 만들기」에서 파일을 고르면, 앱이 기기에서 그 파일의 <strong>오디오만</strong> 뽑아 당사 Google Cloud Storage 비공개 저장소(서울 리전)에 직접 올립니다. 영상 화면과 파일 이름은 올리지 않습니다. 음성 인식·번역을 위해 <strong>Soniox</strong>(클라우드 STT)가 이 오디오를 받아 처리합니다.</li>
+      <li>작업이 끝나면(완료·실패·취소) 저장소의 오디오를 <strong>바로 삭제</strong>하고, Soniox에도 그 작업(인식 결과 포함)의 삭제를 바로 요청합니다. 이때 지우지 못한 것과 작업이 시작되지 않은 업로드(7시간이 지난 것)는 6시간마다 자동으로 도는 정리 작업이 지웁니다. 저장소는 올라간 지 1일이 지난 파일을 자동으로 삭제합니다.</li>
+      <li>만들어진 자막 글(번역 포함)은 앱이 저장하기 전에 꺼져도 같은 기기가 다시 받을 수 있도록 서버에 <strong>3시간</strong> 보관합니다. 다른 기기는 받을 수 없습니다. 3시간이 지나면 더는 받을 수 없고, 6시간마다 자동으로 도는 정리 작업 때 서버에서 삭제됩니다.</li>
+      <li>「다른 언어로 자막 만들기」를 쓰면, 이미 만든 자막 글(오디오 아님)을 번역하려고 <strong>Google Gemini API</strong>로 보냅니다. 번역된 자막 글도 위와 같이 3시간 보관한 뒤 삭제됩니다.</li>
+      <li>자막 파일은 이 기기의 앱 저장 공간과 「다운로드/CCPlay」 폴더에 저장됩니다. 이 파일은 직접 지울 수 있으며, 「다운로드/CCPlay」 폴더의 파일은 앱을 지워도 남습니다.</li>
+      <li>하루 이용 한도·시간 차감·오류 확인을 위해 작업 기록(익명 device_id, 언어, 오디오 길이, 차감한 시간, 작업 상태·시각)을 서버에 남깁니다. 이 기록의 device_id는 <strong>90일 뒤 익명화</strong>되고, 기록은 <strong>1년 뒤 삭제</strong>됩니다. 이 처리도 6시간마다 자동으로 도는 정리 작업이 합니다.</li>
+    </ul>
+
+    <h2>2-3. 푸시 알림 (Firebase Cloud Messaging)</h2>
+    <ul>
+      <li>앱을 실행하면 Google <strong>Firebase Cloud Messaging(FCM)</strong>이 이 기기에 푸시 토큰을 발급하고, 앱은 그 토큰을 익명 device_id와 함께 당사 서버에 보냅니다. 서버는 기기당 토큰 1개만 저장하고, 토큰이 바뀌면 새 토큰으로 바꿉니다.</li>
+      <li>이 토큰은 앱 문의에 답변이 달렸을 때 알림을 보내는 데 씁니다. 공지·업데이트 알림은 앱이 구독한 FCM 주제(전체, 앱 언어, 앱 버전)로 보내며, 이 구독 정보는 당사 서버가 아니라 FCM이 관리합니다.</li>
+      <li>알림을 보낼 때나 점검할 때 FCM이 더 이상 쓸 수 없다고 알려 준 토큰은 서버에서 지웁니다. 그 밖에는 정해진 자동 삭제 기간이 없으며, <a href="#data-deletion">데이터 삭제 요청</a> 때 삭제합니다.</li>
+      <li>알림은 Android 설정에서 끌 수 있습니다. 「자막 만들기」 완료 알림은 서버 푸시가 아니라 앱이 기기에서 띄웁니다.</li>
+    </ul>
+
     <h2>3. 정보의 보관 및 전송</h2>
     <ul>
       <li>이용 권한·사용량·구독 상태는 Google Cloud Run 서버(아시아 리전)에 저장될 수 있습니다.</li>
+      <li>푸시 토큰과 「자막 만들기」 작업 기록·자막 글은 같은 서버의 데이터베이스(Google Cloud SQL, 서울 리전)에 저장됩니다.</li>
+      <li>「자막 만들기」 오디오는 작업 동안 Google Cloud Storage(서울 리전, 비공개)에 임시로 보관됩니다.</li>
       <li>전송 구간은 HTTPS/WSS로 암호화됩니다.</li>
       <li>서버 데이터는 이용 권한 관리 목적에 필요한 최소한만 보관합니다.</li>
     </ul>
@@ -145,8 +176,10 @@
     <h2>4. 제3자 제공 및 위탁</h2>
     <ul>
       <li><strong>Google Play</strong>: 앱 배포·구독·이용권 결제·무결성 검증</li>
-      <li><strong>Google Cloud</strong>: 이용 권한 API 호스팅</li>
-      <li><strong>Soniox</strong>: 실시간 음성 인식·번역(CC 사용 시 오디오 스트림 처리)</li>
+      <li><strong>Google Cloud</strong>: 이용 권한 API 호스팅, 「자막 만들기」 오디오 임시 보관(Cloud Storage, 서울 리전)</li>
+      <li><strong>Soniox</strong>: 음성 인식·번역(CC 사용 시 오디오 스트림, 「자막 만들기」 사용 시 고른 파일의 오디오 처리)</li>
+      <li><strong>Google Gemini API</strong>: 「다른 언어로 자막 만들기」 사용 시 자막 글 번역</li>
+      <li><strong>Google Firebase Cloud Messaging(FCM)</strong>: 푸시 알림 전송(푸시 토큰 처리)</li>
       <li><strong>Sentry</strong>: 크래시·ANR 등 앱 오류 진단(해외 서버로 진단 정보가 전송될 수 있음)</li>
       <li><strong>Google AdMob</strong>: 무료 사용자에게 보상형 광고·배너 표시(Plus는 요청하지 않음). AdMob 미디에이션을 통해 Meta Audience Network 광고가 같은 자리에 나갈 수 있음</li>
       <li><strong>쿠팡</strong>: 통신망 국가가 한국인 기기(통신망 국가가 비어 있으면 SIM 국가가 한국인 기기)의 홈과 무료 시간 받기 화면에 쿠팡 파트너스 상품 배너를 표시할 수 있음(Plus는 요청하지 않음). 배너는 앱 안 웹뷰가 쿠팡 스크립트를 불러옵니다. 광고 ID를 쿠팡에 넘기지 않습니다. 그 웹뷰는 브라우저의 서드파티 쿠키 설정과 상관없이 쿠팡 쿠키를 받을 수 있습니다. 배너를 눌러도 자막 이용 시간은 주지 않습니다</li>
@@ -180,10 +213,12 @@
       <li>Plus 구독 상태·구매 토큰 연동 정보</li>
       <li>블로그 문의에서 제출한 이름·이메일·내용(해당 기록이 있는 경우)</li>
       <li>앱 문의함 메시지·운영자 답변·관련 진단 요약(해당 device_id 기록이 있는 경우)</li>
+      <li>푸시 알림 토큰</li>
+      <li>「자막 만들기」 작업 기록, 아직 남아 있는 자막 글, 진행 중인 작업의 오디오</li>
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
-      <li><strong>음성·영상·자막 원문(기본):</strong> 서버에 영구 저장하지 않으므로 삭제 대상이 아닙니다. Soniox로 전송된 오디오·인식 결과도 당사 서버에 영구 보관하지 않는 것을 지향합니다.</li>
+      <li><strong>음성·영상·자막 원문(기본):</strong> 서버에 영구 저장하지 않으므로 삭제 대상이 아닙니다. Soniox로 전송된 오디오·인식 결과도 당사 서버에 영구 보관하지 않는 것을 지향합니다. 「자막 만들기」의 오디오와 자막 글은 2-2에 적은 대로 자동 삭제됩니다.</li>
       <li><strong>이름·이메일·전화번호:</strong> 앱은 수집하지 않습니다. 블로그 문의에서 제출한 이름·이메일은 삭제 요청 시 문의 기록과 함께 삭제합니다.</li>
       <li><strong>기기 내 설정·즐겨찾기:</strong> 앱 삭제(제거) 시 기기에서 삭제됩니다. 별도 서버 보관 없음.</li>
       <li><strong>Google Play 결제·구독 기록:</strong> Google이 보관합니다. 해지·환불은 Play 스토어 구독 관리에서 처리합니다.</li>
@@ -193,6 +228,7 @@
     <h3>보관 기간 (삭제 요청 전)</h3>
     <p>
       서버 데이터는 이용 권한·주간 한도·구독 확인 목적으로 <strong>서비스 이용 기간 동안</strong> 보관됩니다.
+      다만 「자막 만들기」 오디오·자막 글·작업 기록은 2-2에 적은 기간에 따라 자동으로 삭제되거나 익명화됩니다.
       삭제 요청이 접수되면 위 절차에 따라 삭제하며, 삭제 후에는 복구하지 않습니다.
     </p>
 
@@ -214,7 +250,7 @@
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
       Effective: July 10, 2026<br>
-      Last updated: October 12, 2026<br>
+      Last updated: October 17, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -273,6 +309,16 @@
           <td>Google advertising ID and other signals collected by the AdMob SDK (the app does not request ads while Plus is active)</td>
           <td>Show ads to free users (the app does not request ads while Plus is active)</td>
         </tr>
+        <tr>
+          <td>Push notification token</td>
+          <td>The <strong>push token</strong> that Firebase Cloud Messaging (FCM) issues to this device, stored on our server with the anonymous device_id (one per device)</td>
+          <td>Notifications for replies to in-app inquiries; announcement and update notifications (see 2-3)</td>
+        </tr>
+        <tr>
+          <td>File subtitle job records (when you use “Make subtitles”)</td>
+          <td>Anonymous device_id, recognition/translation languages, audio length, time charged, job status and timestamps. File names are not sent</td>
+          <td>Daily limit, time charging, and error checks (see 2-2)</td>
+        </tr>
       </tbody>
     </table>
 
@@ -281,6 +327,7 @@
       <li>The App does not require Google sign-in, name, email, or phone number. Name and email on the blog contact form are optional.</li>
       <li>We <strong>aim not to persist</strong> browsing history, cookies, or autofill data. (Clear-on-exit is enabled by default.) Cookies from the Coupang banner WebView use the same store and are cleared with the others when that setting is on.</li>
       <li>We do <strong>not permanently store</strong> raw audio or video files on CCPlay servers.</li>
+      <li>The audio of a file you pick in “Make subtitles” and the subtitle text made from it are kept on our servers <strong>only briefly</strong> and then deleted. See 2-2 below for how long.</li>
     </ul>
 
     <h2>2-1. Live captions (CC) — cloud STT (Soniox)</h2>
@@ -293,9 +340,29 @@
       <li>Usage time, subscription, and pass balances may be aggregated by our entitlement API (Google Cloud).</li>
     </ul>
 
+    <h2>2-2. File subtitles (“Make subtitles”) — Soniox and Google Gemini</h2>
+    <ul>
+      <li>When you pick a file in “Make subtitles”, the app extracts <strong>only the audio</strong> on your device and uploads it directly to our private Google Cloud Storage bucket (Seoul region). The video picture and the file name are not uploaded. <strong>Soniox</strong> (cloud STT) receives this audio for speech recognition and translation.</li>
+      <li>When the job ends (completed, failed, or cancelled), the audio is <strong>deleted from storage right away</strong>, and we immediately ask Soniox to delete that job (including its recognition result). Anything that could not be deleted then, and uploads for which no job was started (after 7 hours), are deleted by a cleanup job that runs automatically every 6 hours. The storage bucket also automatically deletes files 1 day after upload.</li>
+      <li>The resulting subtitle text (including any translation) is kept on our server for <strong>3 hours</strong> so the same device can fetch it again if the app closes before saving it. Other devices cannot fetch it. After 3 hours it can no longer be fetched, and it is deleted from the server by the cleanup job that runs automatically every 6 hours.</li>
+      <li>If you use “Make subtitles in another language”, the existing subtitle text (not audio) is sent to the <strong>Google Gemini API</strong> for translation. The translated text is also kept for 3 hours and then deleted, as above.</li>
+      <li>Subtitle files are saved on this device, in app storage and in the “Download/CCPlay” folder. You can delete these files yourself; files in the “Download/CCPlay” folder remain after you uninstall the app.</li>
+      <li>For the daily limit, time charging, and error checks, the server keeps a job record (anonymous device_id, languages, audio length, time charged, job status and timestamps). The device_id in these records is <strong>anonymized after 90 days</strong>, and the records are <strong>deleted after 1 year</strong>. This is also done by the cleanup job that runs automatically every 6 hours.</li>
+    </ul>
+
+    <h2>2-3. Push notifications (Firebase Cloud Messaging)</h2>
+    <ul>
+      <li>When you open the app, Google <strong>Firebase Cloud Messaging (FCM)</strong> issues a push token to this device, and the app sends that token to our server with the anonymous device_id. The server keeps only one token per device and replaces it when the token changes.</li>
+      <li>We use this token to notify you when an in-app inquiry gets a reply. Announcement and update notifications are sent to FCM topics the app subscribes to (all users, app language, app version); those subscriptions are managed by FCM, not stored on our server.</li>
+      <li>When FCM reports that a token can no longer be used (while sending a notification or during a check), we delete it from our server. Otherwise there is no fixed automatic deletion period; the token is deleted when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
+      <li>You can turn notifications off in Android settings. The “Make subtitles” completion notification is shown by the app on your device, not sent as a server push.</li>
+    </ul>
+
     <h2>3. Storage and transmission</h2>
     <ul>
       <li>Entitlement, usage, and subscription data may be stored on Google Cloud Run (Asia region).</li>
+      <li>Push tokens and “Make subtitles” job records and subtitle text are stored in the same server’s database (Google Cloud SQL, Seoul region).</li>
+      <li>“Make subtitles” audio is held temporarily in Google Cloud Storage (Seoul region, private) while the job runs.</li>
       <li>Data in transit is encrypted via HTTPS/WSS.</li>
       <li>Server data is kept only to the minimum needed for entitlement management.</li>
     </ul>
@@ -303,8 +370,10 @@
     <h2>4. Third-party services</h2>
     <ul>
       <li><strong>Google Play</strong>: distribution, subscriptions, time passes, integrity checks</li>
-      <li><strong>Google Cloud</strong>: entitlement API hosting</li>
-      <li><strong>Soniox</strong>: real-time speech recognition and translation (audio stream while CC is on)</li>
+      <li><strong>Google Cloud</strong>: entitlement API hosting; temporary storage of “Make subtitles” audio (Cloud Storage, Seoul region)</li>
+      <li><strong>Soniox</strong>: speech recognition and translation (audio stream while CC is on; audio of the file you pick in “Make subtitles”)</li>
+      <li><strong>Google Gemini API</strong>: translating subtitle text when you use “Make subtitles in another language”</li>
+      <li><strong>Google Firebase Cloud Messaging (FCM)</strong>: delivering push notifications (processes the push token)</li>
       <li><strong>Sentry</strong>: crash/ANR diagnostics (diagnostic data may be processed on servers outside your country)</li>
       <li><strong>Google AdMob</strong>: rewarded ads and banners for free users (not requested while Plus is active). Via AdMob Mediation, Meta Audience Network creatives may fill the same slots</li>
       <li><strong>Coupang</strong>: when the device’s mobile-network country is Korea, or the SIM country is Korea if the network country is empty, the home screen and the free-time sheet may show a Coupang Partners product banner (not requested while Plus is active). An in-app WebView loads Coupang’s script. The app does not send the advertising ID to Coupang. That WebView may accept Coupang cookies even if the browser blocks third-party cookies. Tapping the banner does not add caption time</li>
@@ -338,10 +407,12 @@
       <li>Plus subscription status and purchase-token linkage</li>
       <li>Name, email, and message submitted via the blog contact form, if any</li>
       <li>In-app inquiry messages, operator replies, and related diagnostics summaries for that device_id, if any</li>
+      <li>Push notification token</li>
+      <li>“Make subtitles” job records, any subtitle text still kept, and the audio of a job still in progress</li>
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
-      <li><strong>Raw audio, video, or subtitle text (default):</strong> not permanently stored on our servers. Audio and recognition results sent to Soniox are also not intended for permanent storage on our servers.</li>
+      <li><strong>Raw audio, video, or subtitle text (default):</strong> not permanently stored on our servers. Audio and recognition results sent to Soniox are also not intended for permanent storage on our servers. “Make subtitles” audio and subtitle text are deleted automatically as described in 2-2.</li>
       <li><strong>Name, email, phone number:</strong> not collected by the App. Name and email submitted on the blog contact form are deleted with that inquiry if you request deletion.</li>
       <li><strong>On-device settings and favorites:</strong> removed when you uninstall the App; not stored on our servers.</li>
       <li><strong>Google Play billing and subscription records:</strong> retained by Google; manage cancellation in Play Store.</li>
@@ -351,6 +422,7 @@
     <h3>Retention period (before a deletion request)</h3>
     <p>
       Server data is kept <strong>while you use the service</strong> for entitlement, weekly limits, and subscription verification.
+      However, “Make subtitles” audio, subtitle text, and job records are deleted or anonymized automatically on the schedule in 2-2.
       After a verified deletion request, data is deleted as above and is not restored.
     </p>
 
