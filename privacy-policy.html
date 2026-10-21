@@ -73,7 +73,7 @@
         <tr>
           <td>기기 식별 정보</td>
           <td>Google 계정이 아닌, 앱 설치 기기의 ANDROID_ID 등을 조합해 생성한 <strong>익명 해시(device_id)</strong></td>
-          <td>무료 주간 한도·Plus·CC 이용권 상태 확인, 부정 이용 방지</td>
+          <td>무료 주간 한도·Plus·CC 이용권 상태 확인, 부정 이용 방지, 분석(서버 로그에 device_id 해시 앞 16자를 하루 1회 기록해 활성 기기 수 집계, 30일 후 자동 삭제)</td>
         </tr>
         <tr>
           <td>이용 정보</td>
@@ -293,7 +293,7 @@
         <tr>
           <td>Device identifier</td>
           <td>An <strong>anonymous hash (device_id)</strong> derived from ANDROID_ID and app metadata — not your Google account</td>
-          <td>Free weekly limit, Plus and CC pass status, abuse prevention</td>
+          <td>Free weekly limit, Plus and CC pass status, abuse prevention, analytics (server logs record the first 16 characters of the device_id hash once per day to count active devices; auto-deleted after 30 days)</td>
         </tr>
         <tr>
           <td>Usage data</td>
