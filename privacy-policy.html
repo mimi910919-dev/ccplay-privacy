@@ -178,6 +178,7 @@
     <ul>
       <li>실시간 자막(CC)이나 「자막 만들기」 한 번이 끝날 때, 앱은 아래 값만 담은 요청 <strong>1건</strong>을 당사 서버에 보냅니다: 기능 이름, 사용 시간 구간(1분 미만·1~5분·5~15분·15~60분·60분 이상), 언어 쌍(예: 일본어→한국어), 끝난 화면, 앱 버전, 국가(두 글자 코드).</li>
       <li>device_id·광고 ID·이름·이메일 같은 <strong>식별자와 시각은 보내지 않으며</strong>, 기기에 따로 횟수를 쌓지도 않습니다.</li>
+      <li>활성 기기 집계는 위 ‘기기 식별 정보’ 항목을 참고하세요.</li>
       <li>서버는 요청 하나하나를 저장하지 않고, 날짜(서버 기준)·국가·앱 버전·항목별 <strong>합계 숫자만</strong> 남깁니다. 합계가 5 미만인 칸은 운영자 보고서에서도 숨깁니다.</li>
       <li><strong>유럽경제지역(EEA)·영국·스위스</strong>에 있는 기기와 국가를 알 수 없는 기기에서는 <strong>보내지 않으며</strong>, 서버도 이 지역에서 온 요청은 버립니다.</li>
       <li>이 통계는 어떤 기능이 얼마나 쓰이는지 보고 앱을 고치는 데만 씁니다.</li>
@@ -398,6 +399,7 @@
     <ul>
       <li>When a live caption (CC) session or a “Make subtitles” job ends, the app sends <strong>one</strong> request to our server containing only: feature name, session length range (under 1 min, 1–5 min, 5–15 min, 15–60 min, 60 min or more), language pair (e.g. Japanese→Korean), the screen it ended on, app version, and country (two-letter code).</li>
       <li><strong>No identifiers</strong> (no device_id, advertising ID, name, or email) and <strong>no timestamps</strong> are sent, and the app keeps no separate counters on the device.</li>
+      <li>For active-device counting, see the Device identifier item above.</li>
       <li>The server does not store individual requests. It keeps <strong>only aggregate counts</strong> per date (server time), country, app version, and item. Cells with a count under 5 are hidden even in our internal reports.</li>
       <li>These statistics are <strong>not collected</strong> from devices in the <strong>EEA, the United Kingdom, or Switzerland</strong>, or from devices whose country cannot be determined, and our server discards requests from those countries.</li>
       <li>We use these statistics only to understand which features are used and to improve the app.</li>
