@@ -55,7 +55,7 @@
       앱명: CCPlay : 실시간 영상 번역<br>
       패키지명: com.ccplay.app<br>
       시행일: 2026년 7월 10일<br>
-      최종 개정: 2026년 10월 17일<br>
+      최종 개정: 2026년 10월 21일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -131,7 +131,7 @@
     <h2>2. 수집하지 않는 정보</h2>
     <ul>
       <li>앱은 Google 로그인·이름·이메일·전화번호를 요구하지 않습니다. 블로그 문의 폼에서 이름·이메일은 선택입니다.</li>
-      <li>브라우징 방문 기록·쿠키·자동완성을 <strong>영구 저장하지 않는 것을 지향</strong>합니다. (앱 종료 시 삭제 설정 기본값). 쿠팡 배너 웹뷰의 쿠키도 같은 저장소에 들어가며, 그 설정이 켜져 있으면 함께 지워집니다.</li>
+      <li>브라우징 방문 기록·쿠키·자동완성 정보·웹사이트 저장 데이터·캐시는 <strong>이 기기의 앱 브라우저(WebView) 안에만</strong> 저장되고, 당사 서버로 보내지 않습니다. 「앱 종료 시 삭제」 설정이 기본으로 켜져 있으며, 켜져 있으면 앱 화면을 떠날 때마다(앱을 닫거나 다른 앱으로 갈 때) 캐시·방문 기록·자동완성·모든 쿠키·웹사이트 저장 데이터와 「최근 본 영상」·저장된 탭 목록을 지웁니다. 이 설정을 끄면 직접 지우기 전까지 기기에 남습니다. 쿠팡 배너 웹뷰의 쿠키도 같은 저장소에 들어가며 함께 지워집니다.</li>
       <li>음성·영상 <strong>원본 파일을 당사 서버에 영구 저장하지 않습니다.</strong></li>
       <li>「자막 만들기」에서 고른 파일의 오디오와 만들어진 자막 글은 서버에 <strong>잠시만</strong> 보관한 뒤 지웁니다. 기간은 아래 2-2를 봐 주세요.</li>
     </ul>
@@ -140,7 +140,8 @@
     <ul>
       <li>CC를 켜면 캡처된 <strong>오디오 스트림</strong>이 실시간 음성 인식·번역을 위해 <strong>Soniox</strong>(클라우드 STT)로 전송됩니다.</li>
       <li>연결은 당사 서버가 발급한 <strong>임시 API 키</strong>로 이루어지며, 마스터 키는 앱에 포함되지 않습니다.</li>
-      <li>인식·번역 결과는 화면에 자막으로 표시되며, CCPlay 서버에 음성 원본을 <strong>영구 저장하지 않는 것을 지향</strong>합니다.</li>
+      <li>CC 오디오는 앱에서 Soniox로 <strong>바로</strong> 전송되며, <strong>CCPlay 서버를 거치지 않습니다.</strong> 따라서 CCPlay 서버는 CC 오디오와 인식·번역 결과를 받지도 저장하지도 않습니다. 서버가 받는 것은 임시 키 발급과 이용 시간 계산에 필요한 익명 device_id·이용 시간뿐입니다.</li>
+      <li>임시 API 키는 발급 후 60초 안에 연결해야 쓸 수 있습니다. 인식·번역 결과는 화면에 자막으로 표시됩니다.</li>
       <li>베타 「본 자막 기록」을 켜면, 확정된 자막 글과 앱 안에서 연 페이지 주소가 <strong>이 기기에만</strong> 최대 7일 저장됩니다. 음성 파일은 저장하지 않습니다. 이 기록은 서버로 올리지 않습니다.</li>
       <li>앱 브라우저에서 영상을 재생한 페이지는 「최근 본 영상」으로 페이지 제목·주소·대표 이미지가 <strong>이 기기에만</strong> 최근 20개까지 저장됩니다. 이 기록은 서버로 올리지 않으며, 「기록 지우기」나 브라우저 방문 기록 삭제 때 함께 지워집니다.</li>
       <li>이용 시간·구독·이용권 잔여는 권한 API(Google Cloud)에 집계될 수 있습니다.</li>
@@ -152,7 +153,7 @@
       <li>작업이 끝나면(완료·실패·취소) 저장소의 오디오를 <strong>바로 삭제</strong>하고, Soniox에도 그 작업(인식 결과 포함)의 삭제를 바로 요청합니다. 이때 지우지 못한 것과 작업이 시작되지 않은 업로드(7시간이 지난 것)는 6시간마다 자동으로 도는 정리 작업이 지웁니다. 저장소는 올라간 지 1일이 지난 파일을 자동으로 삭제합니다.</li>
       <li>만들어진 자막 글(번역 포함)은 앱이 저장하기 전에 꺼져도 같은 기기가 다시 받을 수 있도록 서버에 <strong>3시간</strong> 보관합니다. 다른 기기는 받을 수 없습니다. 3시간이 지나면 더는 받을 수 없고, 6시간마다 자동으로 도는 정리 작업 때 서버에서 삭제됩니다.</li>
       <li>「다른 언어로 자막 만들기」를 쓰면, 이미 만든 자막 글(오디오 아님)을 번역하려고 <strong>Google Gemini API</strong>로 보냅니다. 번역된 자막 글도 위와 같이 3시간 보관한 뒤 삭제됩니다.</li>
-      <li>자막 파일은 이 기기의 앱 저장 공간과 「다운로드/CCPlay」 폴더에 저장됩니다. 이 파일은 직접 지울 수 있으며, 「다운로드/CCPlay」 폴더의 파일은 앱을 지워도 남습니다.</li>
+      <li>자막 파일은 이 기기의 앱 저장 공간과 「다운로드/CCPlay」 폴더에 저장됩니다. 앱을 지운 뒤에도 되살릴 수 있도록, 같은 폴더에 복원용 파일(원문·번역 자막 글)도 둡니다. 이 파일들은 직접 지울 수 있으며, 「다운로드/CCPlay」 폴더의 파일은 앱을 지워도 남습니다. 「이전 자막 불러오기」를 쓰면 사용자가 고른 그 폴더 안의 자막·복원용 파일만 읽고, 서버로 다시 보내지 않습니다.</li>
       <li>하루 이용 한도·시간 차감·오류 확인을 위해 작업 기록(익명 device_id, 언어, 오디오 길이, 차감한 시간, 작업 상태·시각)을 서버에 남깁니다. 이 기록의 device_id는 <strong>90일 뒤 익명화</strong>되고, 기록은 <strong>1년 뒤 삭제</strong>됩니다. 이 처리도 6시간마다 자동으로 도는 정리 작업이 합니다.</li>
     </ul>
 
@@ -169,7 +170,17 @@
       <li>처음 열기, 권한 허용, 첫 자막처럼 온보딩이 어디까지 갔는지 단계 이름과 앱 버전, 언어·단계 번호 같은 짧은 값을 서버에 보냅니다.</li>
       <li>Play 설치 출처에서는 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>와 <code>gclid</code>가 있었는지만 저장합니다. 설치 출처 원문과 <code>gclid</code> 값은 저장하지 않고 로그에도 남기지 않습니다.</li>
       <li>기기 식별은 device_id 해시의 앞 16자만 씁니다. 이름, 이메일, 전화번호, 광고 ID는 보내지 않습니다. 같은 기기의 같은 단계는 한 번만 저장합니다.</li>
+      <li><strong>유럽경제지역(EEA)·영국·스위스</strong>에 있는 기기와 국가를 알 수 없는 기기에서는 온보딩 진행 기록과 설치 출처 정보를 <strong>보내지 않습니다.</strong> 국가는 통신망 국가 → SIM 국가 → 기기 지역 설정 순서로 기기 안에서 판단하며(시간대가 유럽이면 유럽으로 봄), 서버는 이 지역 국가 값이 붙은 기록은 버립니다. 국가 값을 보내지 않는 예전 버전 앱의 기록은 국가 없이 저장합니다. 국가 값은 이 판단에만 쓰고 이 기록에 저장하지 않습니다.</li>
       <li>이 기록은 온보딩 어느 단계에서 그만두는지 보는 데만 씁니다. <strong>90일이 지나면 삭제</strong>하고, <a href="#data-deletion">데이터 삭제 요청</a> 때도 그 기기 기록을 지웁니다.</li>
+    </ul>
+
+    <h2>2-5. 익명 이용 통계</h2>
+    <ul>
+      <li>실시간 자막(CC)이나 「자막 만들기」 한 번이 끝날 때, 앱은 아래 값만 담은 요청 <strong>1건</strong>을 당사 서버에 보냅니다: 기능 이름, 사용 시간 구간(1분 미만·1~5분·5~15분·15~60분·60분 이상), 언어 쌍(예: 일본어→한국어), 끝난 화면, 앱 버전, 국가(두 글자 코드).</li>
+      <li>device_id·광고 ID·이름·이메일 같은 <strong>식별자와 시각은 보내지 않으며</strong>, 기기에 따로 횟수를 쌓지도 않습니다.</li>
+      <li>서버는 요청 하나하나를 저장하지 않고, 날짜(서버 기준)·국가·앱 버전·항목별 <strong>합계 숫자만</strong> 남깁니다. 합계가 5 미만인 칸은 운영자 보고서에서도 숨깁니다.</li>
+      <li><strong>유럽경제지역(EEA)·영국·스위스</strong>에 있는 기기와 국가를 알 수 없는 기기에서는 <strong>보내지 않으며</strong>, 서버도 이 지역에서 온 요청은 버립니다.</li>
+      <li>이 통계는 어떤 기능이 얼마나 쓰이는지 보고 앱을 고치는 데만 씁니다.</li>
     </ul>
 
     <h2>3. 정보의 보관 및 전송</h2>
@@ -181,11 +192,16 @@
       <li>서버 데이터는 이용 권한 관리 목적에 필요한 최소한만 보관합니다.</li>
     </ul>
 
-    <h2>4. 제3자 제공 및 위탁</h2>
+    <h2>4. 처리 위탁</h2>
+    <p>CCPlay는 서비스 제공을 위해 아래 업체에 처리를 맡깁니다. 이 업체들은 CCPlay를 위해 맡긴 일만 처리합니다.</p>
+    <ul>
+      <li><strong>Soniox</strong>(음성 인식·번역): CC 사용 시 오디오 스트림, 「자막 만들기」 사용 시 고른 파일의 오디오. 「자막 만들기」 작업이 끝나면 Soniox에 그 작업(인식 결과 포함)의 삭제를 바로 요청합니다.</li>
+    </ul>
+
+    <h2>4-1. 그 밖의 외부 서비스</h2>
     <ul>
       <li><strong>Google Play</strong>: 앱 배포·구독·이용권 결제·무결성 검증</li>
       <li><strong>Google Cloud</strong>: 이용 권한 API 호스팅, 「자막 만들기」 오디오 임시 보관(Cloud Storage, 서울 리전)</li>
-      <li><strong>Soniox</strong>: 음성 인식·번역(CC 사용 시 오디오 스트림, 「자막 만들기」 사용 시 고른 파일의 오디오 처리)</li>
       <li><strong>Google Gemini API</strong>: 「다른 언어로 자막 만들기」 사용 시 자막 글 번역</li>
       <li><strong>Google Firebase Cloud Messaging(FCM)</strong>: 푸시 알림 전송(푸시 토큰 처리)</li>
       <li><strong>Sentry</strong>: 크래시·ANR 등 앱 오류 진단(해외 서버로 진단 정보가 전송될 수 있음)</li>
@@ -227,7 +243,8 @@
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
-      <li><strong>음성·영상·자막 원문(기본):</strong> 서버에 영구 저장하지 않으므로 삭제 대상이 아닙니다. Soniox로 전송된 오디오·인식 결과도 당사 서버에 영구 보관하지 않는 것을 지향합니다. 「자막 만들기」의 오디오와 자막 글은 2-2에 적은 대로 자동 삭제됩니다.</li>
+      <li><strong>익명 이용 통계(2-5):</strong> 식별자 없이 합계 숫자로만 저장되어 특정 기기의 기록을 찾아 지울 수 없습니다.</li>
+      <li><strong>음성·영상·자막 원문(기본):</strong> 서버에 영구 저장하지 않으므로 삭제 대상이 아닙니다. CC 오디오와 인식 결과는 CCPlay 서버를 거치지 않고 Soniox로 바로 가므로 당사 서버에는 없습니다. 「자막 만들기」의 오디오와 자막 글은 2-2에 적은 대로 자동 삭제됩니다.</li>
       <li><strong>이름·이메일·전화번호:</strong> 앱은 수집하지 않습니다. 블로그 문의에서 제출한 이름·이메일은 삭제 요청 시 문의 기록과 함께 삭제합니다.</li>
       <li><strong>기기 내 설정·즐겨찾기:</strong> 앱 삭제(제거) 시 기기에서 삭제됩니다. 별도 서버 보관 없음.</li>
       <li><strong>Google Play 결제·구독 기록:</strong> Google이 보관합니다. 해지·환불은 Play 스토어 구독 관리에서 처리합니다.</li>
@@ -259,7 +276,7 @@
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
       Effective: July 10, 2026<br>
-      Last updated: October 17, 2026<br>
+      Last updated: October 21, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -334,7 +351,7 @@
     <h2>2. Information we do not collect</h2>
     <ul>
       <li>The App does not require Google sign-in, name, email, or phone number. Name and email on the blog contact form are optional.</li>
-      <li>We <strong>aim not to persist</strong> browsing history, cookies, or autofill data. (Clear-on-exit is enabled by default.) Cookies from the Coupang banner WebView use the same store and are cleared with the others when that setting is on.</li>
+      <li>Browsing history, cookies, autofill data, website storage, and cache are stored <strong>only in the app’s browser (WebView) on this device</strong> and are not sent to our servers. The “Clear on exit” setting is on by default; while it is on, every time you leave the app screen (closing the app or switching to another app) the app deletes the cache, browsing history, autofill data, all cookies, website storage, “Recently watched”, and the saved tab list. If you turn it off, this data stays on the device until you delete it. Cookies from the Coupang banner WebView use the same store and are deleted with them.</li>
       <li>We do <strong>not permanently store</strong> raw audio or video files on CCPlay servers.</li>
       <li>The audio of a file you pick in “Make subtitles” and the subtitle text made from it are kept on our servers <strong>only briefly</strong> and then deleted. See 2-2 below for how long.</li>
     </ul>
@@ -343,7 +360,8 @@
     <ul>
       <li>When CC is on, the captured <strong>audio stream</strong> is sent to <strong>Soniox</strong> for real-time speech recognition and translation.</li>
       <li>The connection uses a <strong>temporary API key</strong> issued by our server; the master key is not embedded in the app.</li>
-      <li>Recognition/translation results are shown as captions. We aim <strong>not to permanently store</strong> raw audio on CCPlay servers.</li>
+      <li>CC audio goes from the app <strong>directly</strong> to Soniox and <strong>does not pass through CCPlay servers</strong>. CCPlay servers therefore neither receive nor store CC audio or its recognition/translation results. Our server only receives the anonymous device_id and usage time needed to issue the temporary key and count usage.</li>
+      <li>The temporary API key must be used to connect within 60 seconds of issue. Recognition/translation results are shown as captions.</li>
       <li>If the beta “Save captions” option is on, finished caption text and the in-app page address stay <strong>on this device only</strong> for up to 7 days. No audio file is saved. This history is not uploaded to our servers.</li>
       <li>Pages where you played a video in the in-app browser are kept as “Recently watched” (page title, address, and preview image) <strong>on this device only</strong>, up to the latest 20. This history is not uploaded to our servers and is deleted with “Clear” or when you clear browsing data.</li>
       <li>Usage time, subscription, and pass balances may be aggregated by our entitlement API (Google Cloud).</li>
@@ -355,7 +373,7 @@
       <li>When the job ends (completed, failed, or cancelled), the audio is <strong>deleted from storage right away</strong>, and we immediately ask Soniox to delete that job (including its recognition result). Anything that could not be deleted then, and uploads for which no job was started (after 7 hours), are deleted by a cleanup job that runs automatically every 6 hours. The storage bucket also automatically deletes files 1 day after upload.</li>
       <li>The resulting subtitle text (including any translation) is kept on our server for <strong>3 hours</strong> so the same device can fetch it again if the app closes before saving it. Other devices cannot fetch it. After 3 hours it can no longer be fetched, and it is deleted from the server by the cleanup job that runs automatically every 6 hours.</li>
       <li>If you use “Make subtitles in another language”, the existing subtitle text (not audio) is sent to the <strong>Google Gemini API</strong> for translation. The translated text is also kept for 3 hours and then deleted, as above.</li>
-      <li>Subtitle files are saved on this device, in app storage and in the “Download/CCPlay” folder. You can delete these files yourself; files in the “Download/CCPlay” folder remain after you uninstall the app.</li>
+      <li>Subtitle files are saved on this device, in app storage and in the “Download/CCPlay” folder. A recovery file (original and translated subtitle text) is also kept in that folder so subtitles can be restored after reinstall. You can delete these files yourself; files in the “Download/CCPlay” folder remain after you uninstall the app. “Restore past subtitles” only reads subtitle and recovery files in the folder you choose, and does not upload them again.</li>
       <li>For the daily limit, time charging, and error checks, the server keeps a job record (anonymous device_id, languages, audio length, time charged, job status and timestamps). The device_id in these records is <strong>anonymized after 90 days</strong>, and the records are <strong>deleted after 1 year</strong>. This is also done by the cleanup job that runs automatically every 6 hours.</li>
     </ul>
 
@@ -372,7 +390,17 @@
       <li>The app sends step names such as first open, permission granted, and first subtitle, plus the app version and short values like a language code or step number.</li>
       <li>From the Play install referrer we keep only <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, and whether a <code>gclid</code> was present. The raw referrer string and the <code>gclid</code> value are neither stored nor logged.</li>
       <li>The device identifier is only the first 16 characters of the device_id hash. No name, email, phone number, or advertising ID is sent. Each step is stored once per device.</li>
+      <li>Onboarding progress and install-source data are <strong>not sent</strong> from devices in the <strong>European Economic Area (EEA), the United Kingdom, or Switzerland</strong>, or from devices whose country cannot be determined. The country is decided on the device in this order: mobile-network country → SIM country → device region setting (a European time zone counts as Europe). Our server discards records that carry one of these countries. Records from older app versions that send no country are stored without a country. The country value is used only for this check and is not stored with these records.</li>
       <li>We use this only to see where people leave onboarding. Records are <strong>deleted after 90 days</strong>, and also when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
+    </ul>
+
+    <h2>2-5. Anonymous usage statistics</h2>
+    <ul>
+      <li>When a live caption (CC) session or a “Make subtitles” job ends, the app sends <strong>one</strong> request to our server containing only: feature name, session length range (under 1 min, 1–5 min, 5–15 min, 15–60 min, 60 min or more), language pair (e.g. Japanese→Korean), the screen it ended on, app version, and country (two-letter code).</li>
+      <li><strong>No identifiers</strong> (no device_id, advertising ID, name, or email) and <strong>no timestamps</strong> are sent, and the app keeps no separate counters on the device.</li>
+      <li>The server does not store individual requests. It keeps <strong>only aggregate counts</strong> per date (server time), country, app version, and item. Cells with a count under 5 are hidden even in our internal reports.</li>
+      <li>These statistics are <strong>not collected</strong> from devices in the <strong>EEA, the United Kingdom, or Switzerland</strong>, or from devices whose country cannot be determined, and our server discards requests from those countries.</li>
+      <li>We use these statistics only to understand which features are used and to improve the app.</li>
     </ul>
 
     <h2>3. Storage and transmission</h2>
@@ -384,11 +412,16 @@
       <li>Server data is kept only to the minimum needed for entitlement management.</li>
     </ul>
 
-    <h2>4. Third-party services</h2>
+    <h2>4. Service providers (processing on our behalf)</h2>
+    <p>CCPlay uses the following provider to process data on its behalf to deliver the service. The provider processes the data only for that purpose.</p>
+    <ul>
+      <li><strong>Soniox</strong> (speech recognition and translation): the audio stream while CC is on; the audio of the file you pick in “Make subtitles”. When a “Make subtitles” job ends, we immediately ask Soniox to delete that job (including its recognition result).</li>
+    </ul>
+
+    <h2>4-1. Other third-party services</h2>
     <ul>
       <li><strong>Google Play</strong>: distribution, subscriptions, time passes, integrity checks</li>
       <li><strong>Google Cloud</strong>: entitlement API hosting; temporary storage of “Make subtitles” audio (Cloud Storage, Seoul region)</li>
-      <li><strong>Soniox</strong>: speech recognition and translation (audio stream while CC is on; audio of the file you pick in “Make subtitles”)</li>
       <li><strong>Google Gemini API</strong>: translating subtitle text when you use “Make subtitles in another language”</li>
       <li><strong>Google Firebase Cloud Messaging (FCM)</strong>: delivering push notifications (processes the push token)</li>
       <li><strong>Sentry</strong>: crash/ANR diagnostics (diagnostic data may be processed on servers outside your country)</li>
@@ -430,7 +463,8 @@
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
-      <li><strong>Raw audio, video, or subtitle text (default):</strong> not permanently stored on our servers. Audio and recognition results sent to Soniox are also not intended for permanent storage on our servers. “Make subtitles” audio and subtitle text are deleted automatically as described in 2-2.</li>
+      <li><strong>Anonymous usage statistics (2-5):</strong> stored only as aggregate counts without identifiers, so no record can be linked to or deleted for a specific device.</li>
+      <li><strong>Raw audio, video, or subtitle text (default):</strong> not permanently stored on our servers. CC audio and recognition results go directly to Soniox without passing through CCPlay servers, so they are not on our servers. “Make subtitles” audio and subtitle text are deleted automatically as described in 2-2.</li>
       <li><strong>Name, email, phone number:</strong> not collected by the App. Name and email submitted on the blog contact form are deleted with that inquiry if you request deletion.</li>
       <li><strong>On-device settings and favorites:</strong> removed when you uninstall the App; not stored on our servers.</li>
       <li><strong>Google Play billing and subscription records:</strong> retained by Google; manage cancellation in Play Store.</li>
