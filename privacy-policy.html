@@ -55,7 +55,7 @@
       앱명: CCPlay : 실시간 영상 번역<br>
       패키지명: com.ccplay.app<br>
       시행일: 2026년 7월 10일<br>
-      최종 개정: 2026년 10월 21일<br>
+      최종 개정: 2026년 10월 22일<br>
       문의: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -84,6 +84,16 @@
           <td>구독·이용권 정보</td>
           <td>Google Play 구독·소모성 이용권 상태·구매 토큰</td>
           <td>Plus(월 10시간 Soniox)·CC 이용권 제공</td>
+        </tr>
+        <tr>
+          <td>구매 기록</td>
+          <td>주문 번호, 결제 금액·통화, Play 국가·지역 코드, 상품 ID, 구매 당시 설치 유입 요약(2-6)</td>
+          <td>결제 확인, 광고 효과·매출 분석</td>
+        </tr>
+        <tr>
+          <td>설치 유입 정보</td>
+          <td>utm 값, 광고 클릭 ID(gclid), 설치 출처 원문(2-4)</td>
+          <td>광고 효과 측정, 온보딩 개선</td>
         </tr>
         <tr>
           <td>앱 무결성 토큰</td>
@@ -165,13 +175,13 @@
       <li>알림은 Android 설정에서 끌 수 있습니다. 「자막 만들기」 완료 알림은 서버 푸시가 아니라 앱이 기기에서 띄웁니다.</li>
     </ul>
 
-    <h2>2-4. 온보딩 진행 기록</h2>
+    <h2>2-4. 온보딩 진행 기록·설치 유입 정보</h2>
     <ul>
       <li>처음 열기, 권한 허용, 첫 자막처럼 온보딩이 어디까지 갔는지 단계 이름과 앱 버전, 언어·단계 번호 같은 짧은 값을 서버에 보냅니다.</li>
-      <li>Play 설치 출처에서는 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>와 <code>gclid</code>가 있었는지만 저장합니다. 설치 출처 원문과 <code>gclid</code> 값은 저장하지 않고 로그에도 남기지 않습니다.</li>
+      <li>Play 설치 출처(install referrer)에서 받은 <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, 광고 클릭 ID(<code>gclid</code>) 값, 설치 출처 원문(최대 1,024자)을 서버 데이터베이스에 저장합니다. 광고 클릭·설치 시작 시각과 앱 언어 설정도 함께 저장할 수 있습니다. 광고 클릭 ID와 설치 출처 원문은 서버 로그에는 남기지 않습니다.</li>
       <li>기기 식별은 device_id 해시의 앞 16자만 씁니다. 이름, 이메일, 전화번호, 광고 ID는 보내지 않습니다. 같은 기기의 같은 단계는 한 번만 저장합니다.</li>
       <li><strong>유럽경제지역(EEA)·영국·스위스</strong>에 있는 기기와 국가를 알 수 없는 기기에서는 온보딩 진행 기록과 설치 출처 정보를 <strong>보내지 않습니다.</strong> 국가는 통신망 국가 → SIM 국가 → 기기 지역 설정 순서로 기기 안에서 판단하며(시간대가 유럽이면 유럽으로 봄), 서버는 이 지역 국가 값이 붙은 기록은 버립니다. 국가 값을 보내지 않는 예전 버전 앱의 기록은 국가 없이 저장합니다. 국가 값은 이 판단에만 쓰고 이 기록에 저장하지 않습니다.</li>
-      <li>이 기록은 온보딩 어느 단계에서 그만두는지 보는 데만 씁니다. <strong>90일이 지나면 삭제</strong>하고, <a href="#data-deletion">데이터 삭제 요청</a> 때도 그 기기 기록을 지웁니다.</li>
+      <li>이 기록은 온보딩 어느 단계에서 그만두는지 보고, 광고로 설치·구매가 얼마나 이어졌는지 확인하는 데만 씁니다. <strong>90일이 지나면 삭제</strong>하고, <a href="#data-deletion">데이터 삭제 요청</a> 때도 그 기기 기록을 지웁니다.</li>
     </ul>
 
     <h2>2-5. 익명 이용 통계</h2>
@@ -184,10 +194,19 @@
       <li>이 통계는 어떤 기능이 얼마나 쓰이는지 보고 앱을 고치는 데만 씁니다.</li>
     </ul>
 
+    <h2>2-6. 구매 기록(주문·결제 정보)</h2>
+    <ul>
+      <li>Plus 구독이나 CC 이용권이 서버에 처음 적용될 때, Google Play 검증 결과로 받은 주문 번호, 결제 금액과 통화, Play 국가·지역 코드, 상품 ID를 구매 토큰과 함께 저장합니다. 같은 구매는 한 번만 기록합니다.</li>
+      <li>이때 그 기기의 설치 유입 요약(광고 유입인지 여부, <code>utm_source</code>·<code>utm_medium</code>, 광고 클릭 ID가 있었는지 여부)도 함께 저장합니다.</li>
+      <li>이 정보는 결제 확인과 광고 효과·매출 분석에만 씁니다. 카드 번호 같은 결제 수단 정보는 Google Play가 처리하며 당사 서버에는 저장하지 않습니다. 이 정보를 판매하지 않습니다.</li>
+      <li><strong>서비스 이용 기간 동안</strong> 보관하며, <a href="#data-deletion">데이터 삭제 요청</a> 때 그 기기와 연결된 구매 기록도 삭제합니다.</li>
+    </ul>
+
     <h2>3. 정보의 보관 및 전송</h2>
     <ul>
       <li>이용 권한·사용량·구독 상태는 Google Cloud Run 서버(아시아 리전)에 저장될 수 있습니다.</li>
       <li>푸시 토큰과 「자막 만들기」 작업 기록·자막 글은 같은 서버의 데이터베이스(Google Cloud SQL, 서울 리전)에 저장됩니다.</li>
+      <li>설치 유입 정보(2-4)와 구매 기록(2-6)도 같은 데이터베이스(Google Cloud SQL, 서울 리전)에 저장됩니다.</li>
       <li>「자막 만들기」 오디오는 작업 동안 Google Cloud Storage(서울 리전, 비공개)에 임시로 보관됩니다.</li>
       <li>전송 구간은 HTTPS/WSS로 암호화됩니다.</li>
       <li>서버 데이터는 이용 권한 관리 목적에 필요한 최소한만 보관합니다.</li>
@@ -240,7 +259,8 @@
       <li>앱 문의함 메시지·운영자 답변·관련 진단 요약(해당 device_id 기록이 있는 경우)</li>
       <li>푸시 알림 토큰</li>
       <li>「자막 만들기」 작업 기록, 아직 남아 있는 자막 글, 진행 중인 작업의 오디오</li>
-      <li>온보딩 진행 기록, 설치 출처 요약</li>
+      <li>온보딩 진행 기록, 설치 유입 정보(utm 값·광고 클릭 ID·설치 출처 원문)</li>
+      <li>구독·이용권 구매 기록(주문 번호·결제 금액·통화·국가·지역·설치 유입 요약)</li>
     </ul>
     <h3>삭제되지 않거나 서버에 없는 데이터</h3>
     <ul>
@@ -277,7 +297,7 @@
       App: CCPlay — Live Speech Subtitles &amp; Translation<br>
       Package: com.ccplay.app<br>
       Effective: July 10, 2026<br>
-      Last updated: October 21, 2026<br>
+      Last updated: October 22, 2026<br>
       Contact: <a href="mailto:mimi910919@gmail.com">mimi910919@gmail.com</a>
     </p>
 
@@ -305,6 +325,16 @@
           <td>Subscription and pass data</td>
           <td>Google Play subscription and consumable pass status and purchase tokens</td>
           <td>Plus (10 h Soniox/month) and CC time passes</td>
+        </tr>
+        <tr>
+          <td>Purchase records</td>
+          <td>Order ID, amount paid and currency, Play country/region code, product ID, and install-attribution snapshot at purchase time (2-6)</td>
+          <td>Payment confirmation, ad effectiveness and revenue analysis</td>
+        </tr>
+        <tr>
+          <td>Install attribution</td>
+          <td>utm values, ad click ID (gclid), raw install referrer text (2-4)</td>
+          <td>Measuring ad effectiveness, improving onboarding</td>
         </tr>
         <tr>
           <td>Integrity token</td>
@@ -386,13 +416,13 @@
       <li>You can turn notifications off in Android settings. The “Make subtitles” completion notification is shown by the app on your device, not sent as a server push.</li>
     </ul>
 
-    <h2>2-4. Onboarding progress</h2>
+    <h2>2-4. Onboarding progress and install attribution</h2>
     <ul>
       <li>The app sends step names such as first open, permission granted, and first subtitle, plus the app version and short values like a language code or step number.</li>
-      <li>From the Play install referrer we keep only <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, and whether a <code>gclid</code> was present. The raw referrer string and the <code>gclid</code> value are neither stored nor logged.</li>
+      <li>From the Play install referrer we store <code>utm_source</code>, <code>utm_medium</code>, <code>utm_campaign</code>, <code>utm_content</code>, the ad click ID (<code>gclid</code>) value, and the raw install referrer text (up to 1,024 characters) in our server database. We may also store the ad click and install start times and the app language setting. The ad click ID and raw referrer text are not written to server logs.</li>
       <li>The device identifier is only the first 16 characters of the device_id hash. No name, email, phone number, or advertising ID is sent. Each step is stored once per device.</li>
       <li>Onboarding progress and install-source data are <strong>not sent</strong> from devices in the <strong>European Economic Area (EEA), the United Kingdom, or Switzerland</strong>, or from devices whose country cannot be determined. The country is decided on the device in this order: mobile-network country → SIM country → device region setting (a European time zone counts as Europe). Our server discards records that carry one of these countries. Records from older app versions that send no country are stored without a country. The country value is used only for this check and is not stored with these records.</li>
-      <li>We use this only to see where people leave onboarding. Records are <strong>deleted after 90 days</strong>, and also when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
+      <li>We use this only to see where people leave onboarding and to measure how ads lead to installs and purchases. Records are <strong>deleted after 90 days</strong>, and also when you make a <a href="#data-deletion-en">data deletion request</a>.</li>
     </ul>
 
     <h2>2-5. Anonymous usage statistics</h2>
@@ -405,10 +435,19 @@
       <li>We use these statistics only to understand which features are used and to improve the app.</li>
     </ul>
 
+    <h2>2-6. Purchase records (order and payment details)</h2>
+    <ul>
+      <li>When a Plus subscription or CC pass is first applied on our server, we store the order ID, amount paid and currency, Play country/region code, and product ID returned by Google Play verification, together with the purchase token. Each purchase is recorded once.</li>
+      <li>We also store a snapshot of that device’s install attribution at that time (whether it came from an ad, <code>utm_source</code> and <code>utm_medium</code>, and whether an ad click ID was present).</li>
+      <li>We use this only to confirm payments and to analyze ad effectiveness and revenue. Payment card details are handled by Google Play and are not stored on our servers. We do not sell this data.</li>
+      <li>We keep it <strong>while you use the service</strong>, and when you make a <a href="#data-deletion-en">data deletion request</a> we also delete the purchase records linked to that device.</li>
+    </ul>
+
     <h2>3. Storage and transmission</h2>
     <ul>
       <li>Entitlement, usage, and subscription data may be stored on Google Cloud Run (Asia region).</li>
       <li>Push tokens and “Make subtitles” job records and subtitle text are stored in the same server’s database (Google Cloud SQL, Seoul region).</li>
+      <li>Install attribution (2-4) and purchase records (2-6) are stored in the same database (Google Cloud SQL, Seoul region).</li>
       <li>“Make subtitles” audio is held temporarily in Google Cloud Storage (Seoul region, private) while the job runs.</li>
       <li>Data in transit is encrypted via HTTPS/WSS.</li>
       <li>Server data is kept only to the minimum needed for entitlement management.</li>
@@ -461,7 +500,8 @@
       <li>In-app inquiry messages, operator replies, and related diagnostics summaries for that device_id, if any</li>
       <li>Push notification token</li>
       <li>“Make subtitles” job records, any subtitle text still kept, and the audio of a job still in progress</li>
-      <li>Onboarding progress records and the install-source summary</li>
+      <li>Onboarding progress records and install attribution (utm values, ad click ID, raw referrer text)</li>
+      <li>Purchase records for subscriptions and passes (order ID, amount, currency, country/region, attribution snapshot)</li>
     </ul>
     <h3>Data not deleted or not stored on our servers</h3>
     <ul>
